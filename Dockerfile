@@ -19,12 +19,12 @@ RUN npm install
 
 
 # Build
-FROM base AS bulder
+FROM base AS builder
 # copy dev node_modules
 COPY --from=dependencies /app/node_modules node_modules
 # copy app sources
 COPY . .
-CMD npm run build
+RUN npm run build
 
 
 
@@ -33,7 +33,7 @@ FROM base AS release
 # copy production node_modules
 COPY --from=dependencies /app/prod_node_modules node_modules
 # copy builded app
-COPY --from=bulder /app/build/ build/
+COPY --from=builder /app/build build
 # set app port
 ENV PORT=3000
 # expose port and define CMD
