@@ -1,10 +1,12 @@
 steps:
-- id: 'build app image'
+- id: 'Build app image'
   name: 'gcr.io/cloud-builders/docker'
   args: ["build", "-t", "gcr.io/$PROJECT_ID/node-app:$SHORT_SHA", "."]
+
+- id: 'Push app image to registry'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/node-app:$SHORT_SHA"]
 
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'k8s.yml']
-
-images: ["gcr.io/$PROJECT_ID/node-app:$SHORT_SHA"]
