@@ -1,7 +1,10 @@
 .idea
 .git
-.dockerignore
-Dockerfile
-node_modules
 build
+node_modules
+.dockerignore
 .env
+.env.dist
+cloudbuild.yml
+Dockerfile
+k8s.yml
