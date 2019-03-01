@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-app
+spec:
+  selector:
+    app: node-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: node-app
+  labels:
+    app: node-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: gcr.io/${PROJECT_ID}/node-app:${SHORT_SHA}
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
