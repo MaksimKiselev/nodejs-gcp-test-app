@@ -1,3 +1,7 @@
+substitutions:
+  _CLOUDSDK_COMPUTE_ZONE: europe-north1-a              # default value
+  _CLOUDSDK_CONTAINER_CLUSTER: driveback-test-cluster  # default value
+
 steps:
 - id: 'Build app image'
   name: 'gcr.io/cloud-builders/docker'
@@ -10,3 +14,6 @@ steps:
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'k8s.yml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_CLOUDSDK_COMPUTE_ZONE}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}'
