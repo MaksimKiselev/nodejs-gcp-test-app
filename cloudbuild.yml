@@ -7,9 +7,9 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: ["build", "-t", "gcr.io/$PROJECT_ID/node-app:$SHORT_SHA", "."]
 
-- id: 'Push app image to registry'
-  name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/$PROJECT_ID/node-app:$SHORT_SHA"]
+- id: 'Set node app image in yaml'
+  name: 'ubuntu'
+  args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s.yml']
 
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
@@ -17,5 +17,5 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_CLOUDSDK_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}'
-  - 'PROJECT_ID=${PROJECT_ID}'
-  - 'SHORT_SHA=${SHORT_SHA}'
+
+images: ['gcr.io/$PROJECT_ID/node-app:$SHORT_SHA']

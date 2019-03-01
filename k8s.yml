@@ -11,7 +11,7 @@ spec:
     targetPort: 3000
   type: LoadBalancer
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: node-app
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: gcr.io/${PROJECT_ID}/node-app:${SHORT_SHA}
+        image: NODE_APP_IMAGE_NAME
         ports:
         - name: http
           containerPort: 3000
