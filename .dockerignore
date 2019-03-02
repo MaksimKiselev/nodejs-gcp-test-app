@@ -1,10 +1,10 @@
 .idea
 .git
 build
+docker
+k8s
 node_modules
 .dockerignore
 .env
 .env.dist
 cloudbuild.yml
-Dockerfile
-k8s.yml
