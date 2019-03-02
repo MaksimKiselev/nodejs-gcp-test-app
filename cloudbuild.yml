@@ -9,11 +9,11 @@ steps:
 
 - id: 'Set node app image in yaml'
   name: 'ubuntu'
-  args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s.yml']
+  args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s/node-app.yml']
 
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'k8s.yml']
+  args: ['apply', '-f', 'k8s/']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_CLOUDSDK_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}'
