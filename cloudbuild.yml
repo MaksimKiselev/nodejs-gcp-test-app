@@ -9,7 +9,7 @@ steps:
 
 - id: 'Set node-app image in yaml'
   name: 'ubuntu'
-  args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s/node-app/node-app.yml']
+  args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s/node-app/node-app-deployment.yml']
 
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
