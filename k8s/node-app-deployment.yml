@@ -17,6 +17,13 @@ spec:
       containers:
       - name: node-app
         image: NODE_APP_IMAGE_NAME
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: REDIS_HOST
+          value: "redis-master"
+        - name: REDIS_PORT
+          value: "6379"
         ports:
         - name: http
           containerPort: 3000
