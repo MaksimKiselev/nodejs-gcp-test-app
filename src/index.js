@@ -1,20 +1,26 @@
 import 'dotenv/config';
 import express from 'express';
-import PageViewsCounter from './PageViewsCounter';
+import redis from 'redis';
+import Counter from './Counter';
+import CounterRedisStore from './CounterRedisStore';
 
 const port = process.env.PORT || 3000;
+
 const app = express();
-const pageViewsCounter = new PageViewsCounter();
 
-let pageViews = [];
+const redisClient = redis.createClient({
+    'host': process.env.REDIS_HOST,
+    'port': process.env.REDIS_PORT,
+});
+redisClient.on('error', (err) => console.error(err));
 
-app.get('*', function (req, res) {
+const counterStore = new CounterRedisStore(redisClient);
+const counter = new Counter(counterStore);
 
-    let url = req.originalUrl;
+app.get('/', async function (req, res) {
+    await counter.addPageView();
 
-    pageViewsCounter.addPageView(url);
-
-    let pastMinutePageViews = pageViewsCounter.getPageViewsOfPastMinute(url);
+    let pastMinutePageViews = await counter.getPageViewsOfPastMinute();
 
     res.send(`${pastMinutePageViews}`);
 });
