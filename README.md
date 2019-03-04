@@ -48,7 +48,7 @@ See `cloudbuild.yml` for more details.
 Enable GKE API at: https://console.cloud.google.com/kubernetes/list
 
 
-Create a container cluster: `gcloud container clusters create CLUSTER_NAME --num-nodes=1`
+Create a container cluster: `gcloud container clusters create CLUSTER_NAME --num-nodes=3`
 
 On page https://console.cloud.google.com/iam-admin/iam add role Administrator Kubernetes Engine to Cloud Build Service Account
 
