@@ -7,17 +7,9 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: ["build", "-f", "docker/node-app/Dockerfile", "-t", "gcr.io/$PROJECT_ID/node-app:$SHORT_SHA", "."]
 
-- id: 'Build mysql image'
-  name: 'gcr.io/cloud-builders/docker'
-  args: ["build", "-f", "docker/mysql/Dockerfile", "-t", "gcr.io/$PROJECT_ID/mysql:$SHORT_SHA", "."]
-
 - id: 'Set node-app image in yaml'
   name: 'ubuntu'
   args: ['bash','-c','sed -i "s,NODE_APP_IMAGE_NAME,gcr.io/$PROJECT_ID/node-app:$SHORT_SHA," k8s/node-app/node-app.yml']
-
-- id: 'Set mysql image in yaml'
-  name: 'ubuntu'
-  args: ['bash','-c','sed -i "s,MYSQL_IMAGE_NAME,gcr.io/$PROJECT_ID/mysql:$SHORT_SHA," k8s/mysql/mysql.yml']
 
 - id: 'kubectl apply'
   name: 'gcr.io/cloud-builders/kubectl'
@@ -26,4 +18,4 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=${_CLOUDSDK_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}'
 
-images: ['gcr.io/$PROJECT_ID/node-app:$SHORT_SHA', 'gcr.io/$PROJECT_ID/mysql:$SHORT_SHA']
+images: ['gcr.io/$PROJECT_ID/node-app:$SHORT_SHA']
